@@ -1,0 +1,253 @@
+/*****************
+    Project
+    Name: Sooraj Pamadath Rajan 
+    Date: december 2022
+    Description: Website
+    External Links: Alberta Government Open public food guideline (AHS low risk)
+    Copyright: All content including titles and products are my sister's
+               and Images are actual pictures of her products
+               (Facebook/Feast On Gluten-Free)
+******************/
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+
+body{
+    width: 98%;
+    margin: 10px auto;
+    background-color: #fef9e7;
+    font-family: Verdana, sans-serif;
+    border: 1px solid red;
+    border-radius: 8px;
+    box-shadow: 0px 0px 6px black;
+}
+
+    #commonheader{
+        display: flex;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 30px;
+        align-items: center;
+        justify-content: center;
+        background-image: url("images/home.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-top-right-radius: 7px;
+        border-top-left-radius: 7px;
+    }
+
+        #commonheader img{
+            float: left;
+            margin-right: 30px;
+            border-radius: 77px;
+            box-shadow: 0px 0px 10px white, 0px 0px 20px red;
+        }
+
+        #commonheader h1{
+            font-size: 3em;
+            text-shadow: 0px 6px 6px white, 0px 0px 6px white;
+        }
+
+    #commonnav ul{
+        
+        list-style: none;
+        text-align: center;
+        background: linear-gradient(to bottom, darkred 0%, white 50%, darkred 100%);
+    }
+
+        #commonnav a{
+            color: black;
+            display: block;
+            padding: 11px;
+            text-decoration: none;
+            font-weight: bold;
+            
+        }
+
+        #commonnav a:hover, #commonnav a:focus{
+            font-size: 1.5em;
+            text-shadow: 0px 0px 7px yellow;
+            transition: 0.05s;
+        }
+
+    #commonfooter nav ul{
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        justify-content: center;
+    }
+
+        #commonfooter li a{
+            text-decoration: none;
+            padding: 0px 5px;
+            font-size: .8em;
+        }
+
+        #commonfooter p{
+            text-align: center;
+            font-size: .8em;
+            margin-bottom: 10px;
+        }
+
+.contentmain, .productmain, .contactmain{
+    padding: 10px;
+}
+
+    .contentsection, .contentaside{
+        border: 1px solid black;
+        box-shadow: 0px 0px 8px black;
+        margin: 0px 20px;
+    }
+
+    .contentsection h2{
+        padding-bottom: 20px;
+        text-align: center;
+        font-size: 2em;
+        color: darkred;
+        text-shadow: 1px 1px 1px  #85c1e9;
+    }
+
+    .contentsection p{
+        font-size: 1.2em;
+        font-style: italic;
+        line-height: 20px;
+        text-shadow: .4px .4px .4px #5d6d7e;
+        padding: 15px;
+    }
+
+    .contentsection img{
+        padding: 15px;
+    }
+
+    .lastp{
+        padding-bottom: 40px;
+    }
+
+    .contentaside h2{
+        text-align: center;
+        font-weight: bold;
+        color: darkred;
+        text-shadow: 1px 1px 1px  #85c1e9;
+        padding: 10px;
+    }
+
+    .contentaside p{
+        font-weight: bold;
+        padding: 10px;
+    }
+    .contentaside img{
+        max-width: 100%;
+    }
+    .contentaside div{
+        padding: 10px;
+    }
+
+.productsection ol{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    list-style: none;
+}
+
+.productheading{
+    text-align: center;
+    font-size: 2em;
+    color: darkred;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px  #85c1e9;
+    padding: 15px;
+}
+
+    .productsection ol li{
+        font-style: italic;
+        font-weight: bold;
+        border: 1px solid black;
+        margin: 10px;
+        padding: 10px;
+        box-sizing: content-box;
+        width: 302px;
+        box-shadow: 6px 6px 8px black;
+        border-radius: 9px;
+        text-align: center;
+    }
+
+    .productsection ol li img{
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border: 1px solid grey;
+    }
+
+.contactmain h3{
+    text-align: center;
+    font-size: 2em;
+    color: darkred;
+    text-shadow: 1px 1px 1px  #85c1e9;
+    padding-bottom: 10px;
+}
+
+#contactform{
+    margin: auto;
+    padding: 20px;
+    width: 70%;
+    border: 2px solid black;
+    border-radius: 7px;
+}
+
+    #contactform h6{
+        padding: 10px 0px;
+        font-size: 1em;
+        text-align: center;
+    }
+
+
+        .contactbuttons{
+            padding-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+            .contactbuttons button{
+                margin: 10px;
+            }
+
+        .error{
+            width: 100%;
+            text-align: right;
+            padding-right: 40px;
+            visibility: hidden;
+            color: red;
+            font-size: .8em; 
+        }
+
+        #contactform ol li{
+            list-style: none;
+            display: flex;
+        }
+
+            #contactform ol li label{
+                flex: 1;
+            }
+            #contactform ol li input, textarea{
+                flex: 3;
+            }
+
+
+@media (min-width: 700px){
+
+    #commonnav ul{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .contentmain{
+        display: flex;
+        width: 95%;
+        margin: 20px auto;
+    }
+
+
+}
