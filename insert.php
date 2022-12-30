@@ -33,7 +33,6 @@ require('connect.php');
         if (file_is_an_image($temporary_image_path, $new_image_path)) {
             move_uploaded_file($temporary_image_path, $new_image_path);
         }
-    }
 
 
 //Input feilds for content to database. Sanitization and insert into table
@@ -43,11 +42,11 @@ require('connect.php');
 
     if ($_POST && (strlen($comment) >1) && !empty($comment) 
             && (strlen($name) >1) && !empty($name)) {
-            $query = "INSERT INTO product (name, description) VALUES (:name, :comment)";
+            $query = "INSERT INTO product (name, description, imagename) VALUES (:name, :comment, :imagename )";
             $statement = $db->prepare($query);
             $statement->bindValue(':comment', $comment); 
             $statement->bindValue(':name', $name);
-            
+            $statement->bindValue(':imagename', $new_image_path);
             if($statement->execute())
                 { 
                     header("Location:index.html");
@@ -57,8 +56,8 @@ require('connect.php');
 
     else {   
             exit("Cannot leave feilds empty when creating Product page. Please Retry"); }
-?>
 
-
+}
+	else { exit("Product image required. Please Retry"); }
 
 ?>
