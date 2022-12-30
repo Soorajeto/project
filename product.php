@@ -14,10 +14,11 @@ require('connect.php');
     if($_POST){
 
         if($_POST['ip']==='date'){
-            $query = "SELECT * FROM product ORDER BY date";
+            $query = "SELECT * FROM product";
             $statement = $db->prepare($query);
             $statement->execute();
-            $quotes = $statement->fetchAll();}
+            $quote = $statement->fetchAll();
+            $quotes = array_reverse($quote);}
 
         elseif($_POST['ip']==='name'){
             $query = "SELECT * FROM product ORDER BY name";
@@ -70,14 +71,14 @@ require('connect.php');
                             <option value="date">Latest Product</option>
                             <option value="name">Product Name</option>
                         </select>
-                        <button type="button" id="btn">Search</button>
+                        <button type="submit" id="btn">Search</button>
                     </div>
             </fieldset>
         </form>
         <div class="productsection">
             <ol>
                 <?php foreach ($quotes as $quote): ?>
-                <li><img src="images/<?=$quote['imagename']?>" alt="<?=$quote['imagename']?>"><?= $quote['description'] ?></li>
+                <li><a href="index.html"> <img src="images/<?=$quote['imagename']?>" alt="<?=$quote['imagename']?>"></a><?= $quote['name'] ?></li>
                 <?php endforeach ?>
             </ol>
         </div>
