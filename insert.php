@@ -1,6 +1,8 @@
 <?php
 
-	// require('connect.php');
+require('connect.php');
+
+// Image Upload coding - Only image files gif,jpg,jpeg,png,bmp are allowed
 
     function file_upload_path($original_filename, $upload_subfolder_name = 'images') {
        $current_folder = dirname(__FILE__);
@@ -32,6 +34,30 @@
             move_uploaded_file($temporary_image_path, $new_image_path);
         }
     }
+
+
+//Input feilds for content to database. Sanitization and insert into table
+
+    $name = filter_input(INPUT_POST, 'name',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    if ($_POST && (strlen($comment) >1) && !empty($comment) 
+            && (strlen($name) >1) && !empty($name)) {
+            $query = "INSERT INTO product (name, description) VALUES (:name, :comment)";
+            $statement = $db->prepare($query);
+            $statement->bindValue(':comment', $comment); 
+            $statement->bindValue(':name', $name);
+            
+            if($statement->execute())
+                { 
+                    header("Location:index.html");
+                    exit;
+                }
+        }
+
+    else {   
+            exit("Cannot leave feilds empty when creating Product page. Please Retry"); }
+?>
 
 
 
