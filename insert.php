@@ -46,7 +46,7 @@ require('connect.php');
             $statement = $db->prepare($query);
             $statement->bindValue(':comment', $comment); 
             $statement->bindValue(':name', $name);
-            $statement->bindValue(':imagename', $new_image_path);
+            $statement->bindValue(':imagename', $image_filename);
             if($statement->execute())
                 { 
                     header("Location:index.html");
