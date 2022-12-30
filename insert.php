@@ -26,38 +26,32 @@ require('connect.php');
 	    $image_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
 
     if ($image_upload_detected) {
-        $image_filename       = $_FILES['image']['name'];
+        $image_filename       = $_FILES['image']['name'];    
         $temporary_image_path = $_FILES['image']['tmp_name'];
         $new_image_path       = file_upload_path($image_filename);
 
-        if (file_is_an_image($temporary_image_path, $new_image_path)) {
+//        if (file_is_an_image($temporary_image_path, $new_image_path)) {
             move_uploaded_file($temporary_image_path, $new_image_path);
-        }
-
+//        } else echo "fileupload error";
+ 
 
 //Input feilds for content to database. Sanitization and insert into table
 
     $name = filter_input(INPUT_POST, 'name',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    if ($_POST && (strlen($comment) >1) && !empty($comment) 
-            && (strlen($name) >1) && !empty($name)) {
+    	if ($_POST && (strlen($comment) >1) && !empty($comment) && (strlen($name) >1) && !empty($name)) {
             $query = "INSERT INTO product (name, description, imagename) VALUES (:name, :comment, :imagename )";
             $statement = $db->prepare($query);
             $statement->bindValue(':comment', $comment); 
             $statement->bindValue(':name', $name);
             $statement->bindValue(':imagename', $image_filename);
-            if($statement->execute())
-                { 
-                    header("Location:index.html");
-                    exit;
-                }
-        }
+// header("Location:index.html");            
+            if($statement->execute()) {  echo "works"; } else echo "error line 52 database"; }
 
-    else {   
-            exit("Cannot leave feilds empty when creating Product page. Please Retry"); }
+           else {  exit("Cannot leave feilds Empty when Creating Product Page. Please Retry"); }
 
 }
-	else { exit("Product image required. Please Retry"); }
+	else { exit("Product Image Required. Please Retry"); }
 
 ?>
