@@ -16,7 +16,7 @@ require('connect.php');
 
 	    $actual_file_extension   = pathinfo($new_path, PATHINFO_EXTENSION);
 	    $actual_mime_type        = mime_content_type($temporary_path);
-echo $actual_file_extension;echo $actual_mime_type;
+
 	    $file_extension_is_valid = in_array($actual_file_extension, $allowed_file_extensions);
 	    $mime_type_is_valid      = in_array($actual_mime_type, $allowed_mime_types);
 
@@ -30,11 +30,10 @@ echo $actual_file_extension;echo $actual_mime_type;
         $image_filename       = $_FILES['image']['name'];    
         $temporary_image_path = $_FILES['image']['tmp_name'];
         $new_image_path       = file_upload_path($image_filename);
-        file_is_an_image($temporary_image_path, $new_image_path);
 
-//        if (file_is_an_image($temporary_image_path, $new_image_path)) {
+        if (file_is_an_image($temporary_image_path, $new_image_path)) {
             move_uploaded_file($temporary_image_path, $new_image_path);
-//        } else echo "fileupload error";
+        
  
 
 //Input feilds for content to database. Sanitization and insert into table
@@ -48,12 +47,13 @@ echo $actual_file_extension;echo $actual_mime_type;
             $statement->bindValue(':comment', $comment); 
             $statement->bindValue(':name', $name);
             $statement->bindValue(':imagename', $image_filename);
-// header("Location:index.html");            
-            if($statement->execute()) {  echo "works"; } else echo "error line 52 database"; }
+//            
+            if($statement->execute()) {  header("Location:index.html"); } else echo "error with database"; }
 
            else {  exit("Cannot leave feilds Empty when Creating Product Page. Please Retry"); }
 
-}
-	else { exit("Product Image Required. Please Retry"); }
+       } else exit("Incorrect Image format. Please use jpeg, gif or png types and Retry");
+
+}	else { exit("Product Image Required. Please Retry"); }
 
 ?>
