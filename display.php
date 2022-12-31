@@ -50,13 +50,21 @@ require('connect.php');
 		</ul>
 	</nav>
 
-    <section class="displayed">
-        <h3><?= $quotes['name'] ?></h3>
-        <img src="images/<?=$quotes['imagename']?>" alt="<?=$quotes['imagename']?>">                                     
-        <p><?= $quotes['description']?></p>
-        <p><a href="edit.php?id=<?=$quotes['id']?>">Edit this Item (Admin Only)</a></p>
-    </section>
-
+	
+	<main class="contentmain">
+		<section class="contentsection">
+			<img id="show" src="images/<?=$quotes['imagename']?>" alt="<?=$quotes['imagename']?>" />
+		</section>
+    	<aside class="contentaside">
+    	</br>
+    		<h3 class="name"><?= $quotes['name'] ?></h3>
+    	</br>
+        	<p class="fancy">" <?= $quotes['description']?> "</p>
+        </br>
+        	<p class="light">Posted on <?= date_format((date_create($quotes['date'])),"F d, Y, h:i a") ?></p>
+        	<p><a class="light" href="edit.php?id=<?=$quotes['id']?>">Edit this Item (Admin Only)</a></p>
+    	</aside>
+	</main>
 
     <footer id="commonfooter">
         <nav>

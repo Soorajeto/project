@@ -3,10 +3,7 @@
     Name: Sooraj Rajan
     Date: december 2022
     Description: Website
-    External Links: Alberta Government Open public food guideline (AHS low risk)
-    Copyright: All content including titles and products are my sister's
-               and Images are actual pictures of her products
-               (Facebook/Feast On Gluten-Free)
+
 ******************/
 *{
     margin:0px;
@@ -16,7 +13,7 @@
 
 body{
     width: 98%;
-    margin: 10px auto;
+    margin: 5px auto;
     background-color: #fef9e7;
     font-family: Verdana, sans-serif;
     border: 1px solid red;
@@ -42,7 +39,7 @@ body{
             float: left;
             margin-right: 30px;
             border-radius: 77px;
-            box-shadow: 0px 0px 10px white, 0px 0px 20px red;
+            box-shadow: 0px 0px 10px black, 0px 0px 20px blue;
         }
 
         #commonheader h1{
@@ -250,4 +247,24 @@ body{
     }
 
 
+}
+
+.light {
+    align-items: left;
+    font-style: italic;
+    text-decoration: none;
+    font-size: 0.75em;
+}
+
+.fancy{
+    text-align: center;
+    font-family: cursive;
+    font-size: 1.55em;
+}
+
+.name {
+    font-family: cursive;
+    text-align: center;
+    font-size: 2em;
+    text-shadow: 0px 6px 6px lightblue, 0px 0px 6px lightblue;
 }
