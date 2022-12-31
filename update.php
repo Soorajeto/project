@@ -69,11 +69,12 @@
 
     if ($_POST && (strlen($comment) >1) && !empty($comment) && (strlen($name) >1) && !empty($name)) {
     
-        $query = "INSERT INTO product (name, description, imagename) VALUES (:name, :comment, :imagename )";
+        $query = "UPDATE product SET name = :name, description = :comment, imagename = :imagename WHERE id = :id";
         $statement = $db->prepare($query);
         $statement->bindValue(':comment', $comment); 
         $statement->bindValue(':name', $name);
         $statement->bindValue(':imagename', $image_filename);
+        $statement->bindValue(':id', $fid);
 
         if($statement->execute()) {  header("Location:index.html"); } else {exit("Database Error");}
 
@@ -92,7 +93,7 @@
             $fid = filter_input(INPUT_POST,'delete', FILTER_SANITIZE_NUMBER_INT);
             $query = "DELETE FROM product WHERE id = :id";
             $statement = $db->prepare($query);
-            $statement->bindValue(':id', $id, PDO::PARAM_INT);
+            $statement->bindValue(':id', $fid, PDO::PARAM_INT);
             $statement->execute();  
 
         header("Location:index.php"); 
