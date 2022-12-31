@@ -15,7 +15,7 @@ require('connect.php');
 
     if(verifyid()){
 
-                $fid = filter_input(INPUT_POST,'id', FILTER_SANITIZE_NUMBER_INT);
+                $fid = filter_input(INPUT_POST,'editbutton', FILTER_SANITIZE_NUMBER_INT);
 
                 $query = "SELECT * FROM product WHERE id=:id";
                 $statement = $db->prepare($query);
@@ -25,8 +25,8 @@ require('connect.php');
 
     else {  exit("Invalid Parameter");  }
 
-    $query = "SELECT * FROM product";
-    $statement = $db->prepare($query);
+    $query2 = "SELECT * FROM product";
+    $statement = $db->prepare($query2);
     $statement->execute();
     $list = $statement->fetchAll();
 
@@ -57,8 +57,8 @@ require('connect.php');
     
     <main class="productmain">
 
-        <form id="inner" method="post" action="edit.php">
-            <p>Choose a different item : </p>
+        <form method="post" action="edit.php">
+            <p>Choose another item : </p>
                 <div id="sortingorder">
                     <select id="editbutton" name="editbutton">
                         <option value="" selected disabled hidden>Select an Option</option>
@@ -66,16 +66,36 @@ require('connect.php');
                             <option value="<?=$item['id']?>"><?=$item['name']?></option>
                         <?php endforeach ?>
                     </select>
-                    <button type="submit" id="btn">Go!</button>
+                    <button type="submit">Go!</button>
                 </div>
         </form>
-        <div class="productsection">
+        
+
+        <form method="post" action="update.php" enctype="multipart/form-data">
+
             <ol>
-                <?php foreach ($quotes as $quote): ?>
-                <li><a href="display.php?id=<?=$quote['id']?>"> <img src="images/<?=$quote['imagename']?>" alt="<?=$quote['imagename']?>"></a><?= $quote['name'] ?></li>
-                <?php endforeach ?>
+                <li>
+                    <label for="name">Product Name:</label>
+                    <input type="text" autofocus id="name" name="name" placeholder="<?=$quotes['name']?>" />
+                </li>
+                <li>
+                    <label for="comment">Description:</label>
+                    <textarea id="comment" name="comment" placeholder="<?=$quotes['description']?>"></textarea>
+                </li>
+                <li>
+                    <label for="image">Product Image:</label>
+                    <input type="file" name="image" id="image" />
+                </li>
             </ol>
-        </div>
+            <p>Last accessed : <?= date_format((date_create($quotes['date'])),"F d, Y, h:i a") ?></p>
+            <div>
+                <p class="contactbuttons">
+                    <button type="submit" name="update">Update</button>
+                    <button type="submit" name="delete">Delete</button>
+                </p>
+            </div>
+
+        </form>
     
     </main>
 
