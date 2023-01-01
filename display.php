@@ -52,9 +52,12 @@ require('connect.php');
 
 	
 	<main class="contentmain">
-		<section class="contentsection">
-			<img id="show" src="images/<?=$quotes['imagename']?>" alt="<?=$quotes['imagename']?>" />
-		</section>
+
+		<?php if(!($quotes['imagename'] ==="none")): ?>
+			<section class="contentsection">
+				<img id="show" src="images/<?=$quotes['imagename']?>" alt="<?=$quotes['imagename']?>" />
+			</section>
+		<?php endif ?>
     	<aside class="contentaside">
     	</br>
     		<h3 class="name"><?= $quotes['name'] ?></h3>
@@ -62,7 +65,9 @@ require('connect.php');
         	<p class="fancy">" <?= $quotes['description']?> "</p>
         </br>
         	<p class="light">Posted on <?= date_format((date_create($quotes['date'])),"F d, Y, h:i a") ?></p>
-        	<p><a class="light" href="edit.php?id=<?=$quotes['id']?>">Edit this Item (Admin Only)</a></p>
+        	<form id="edit" action="edit.php" method="post">
+        		<button name ="editbutton" id="editbutton" type="submit" value="<?=$quotes['id']?>">Edit this Item</button>
+        	</form>
     	</aside>
 	</main>
 
@@ -74,7 +79,7 @@ require('connect.php');
 				<li><a href="admin.php">Admin</a></li>
 			</ul>
         </nav>
-        <p>Feast On Gluten-Free Home Bakery Edmonton Alberta T6L4W1</p>
+        <p>Feast On Gluten-Free Home Bakery</p>
     </footer>	
 
 </body>
