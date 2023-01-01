@@ -91,7 +91,8 @@
              
         }
     
-    } else $image_filename  = "none";
+    } else {    unlink('images/'.$quotes['imagename']);
+                $image_filename  = "none"; }
         
     
     $name = filter_input(INPUT_POST, 'name',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
