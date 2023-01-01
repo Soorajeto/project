@@ -30,6 +30,13 @@
        return join(DIRECTORY_SEPARATOR, $path_segments);
     }
 
+    function image_resize($source,$width,$height) {
+        $new_width =300;
+        $new_height =300;
+        $thumbImg=imagecreatetruecolor($new_width,$new_height);
+        imagecopyresampled($thumbImg,$source,0,0,0,0,$new_width,$new_height,$width,$height);
+        return $thumbImg;
+    }
     
 
     function file_is_an_image($temporary_path, $new_path) {
@@ -48,7 +55,6 @@
     
     $image_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
 
-    
 
 
     if ($image_upload_detected) {
@@ -57,10 +63,35 @@
         $new_image_path       = file_upload_path($image_filename);
 
         if (file_is_an_image($temporary_image_path, $new_image_path)) {
-            move_uploaded_file($temporary_image_path, $new_image_path); 
+
+                $image = $temporary_image_path;
+                $imgProperties = getimagesize($image);
+                $imageName = $image_filename;
+                $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+                $img_type = $imgProperties[2];
+                 
+            if( $img_type == IMAGETYPE_JPEG ) {
+                $sourcea = imagecreatefromjpeg($image);
+                
+                $resizeImga = image_resize($sourcea,$imgProperties[0],$imgProperties[1]);
+                imagejpeg($resizeImga,$new_image_path); 
+            }
+            elseif ($img_type == IMAGETYPE_PNG ) {
+                $sourcea = imagecreatefrompng($image);
+                
+                $resizeImga = image_resize($sourcea,$imgProperties[0],$imgProperties[1]);
+                imagepng($resizeImga,$new_image_path);
+            }
+            elseif ($img_type == IMAGETYPE_GIF ) {
+                $sourcea = imagecreatefromgif($image);
+                
+                $resizeImga = image_resize($sourcea,$imgProperties[0],$imgProperties[1]);
+                imagegif($resizeImga,$new_image_path);
+            }
+             
         }
     
-    } else $image_filename  = "noimage.jpeg"
+    } else $image_filename  = "none";
         
     
     $name = filter_input(INPUT_POST, 'name',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -88,7 +119,7 @@
 // check if delete button is pressed, if true delete specific row
             
 
-    if ($_POST['delete']) {
+    elseif ($_POST['delete']) {
 
             $fid = filter_input(INPUT_POST,'delete', FILTER_SANITIZE_NUMBER_INT);
             $query = "DELETE FROM product WHERE id = :id";
@@ -96,7 +127,7 @@
             $statement->bindValue(':id', $fid, PDO::PARAM_INT);
             $statement->execute();  
 
-        header("Location:index.php"); 
+        header("Location:index.html"); 
         exit; }
 
 
