@@ -65,28 +65,26 @@ require('connect.php');
                 imagegif($resizeImga,$new_image_path);
             }
 
+        } else exit("Unsupported Image format. Please use jpeg, gif or png types and Retry");
+
+    } else $image_filename  = "none";
+
 
 //Input feilds for content to database. Sanitization and insert into table
 
     $name = filter_input(INPUT_POST, 'name',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    	if ($_POST && (strlen($comment) >1) && !empty($comment) && (strlen($name) >1) && !empty($name)) {
+    	if ($_POST && (strlen($comment) >0) && !empty($comment) && (strlen($name) >0) && !empty($name)) {
             $query = "INSERT INTO product (name, description, imagename) VALUES (:name, :comment, :imagename )";
             $statement = $db->prepare($query);
             $statement->bindValue(':comment', $comment); 
             $statement->bindValue(':name', $name);
             $statement->bindValue(':imagename', $image_filename);
-//            
+            
             if($statement->execute()) {  header("Location:index.html"); } else echo "error with database"; }
 
            else {  exit("Cannot leave feilds Empty when Creating Product Page. Please Retry"); }
 
-       } else exit("Unsupported Image format. Please use jpeg, gif or png types and Retry");
-
-
-
-
-}	else { exit("Product Image Required When creating product page for the first time. Please Retry"); }
 
 ?>
