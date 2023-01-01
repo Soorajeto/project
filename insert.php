@@ -2,7 +2,15 @@
 
 require('connect.php');
 
-// Image Upload coding - Only image files gif,jpg,jpeg,png,bmp are allowed
+// Image Upload coding - Only image files gif,jpg,jpeg,png are allowed
+
+    function image_resize($source,$width,$height) {
+        $new_width =300;
+        $new_height =300;
+        $thumbImg=imagecreatetruecolor($new_width,$new_height);
+        imagecopyresampled($thumbImg,$source,0,0,0,0,$new_width,$new_height,$width,$height);
+        return $thumbImg;}
+
 
     function file_upload_path($original_filename, $upload_subfolder_name = 'images') {
        $current_folder = dirname(__FILE__);
@@ -21,7 +29,6 @@ require('connect.php');
 	    $mime_type_is_valid      = in_array($actual_mime_type, $allowed_mime_types);
 
     	return $file_extension_is_valid && $mime_type_is_valid;	}
-
 	    
 
 	    $image_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
@@ -32,9 +39,32 @@ require('connect.php');
         $new_image_path       = file_upload_path($image_filename);
 
         if (file_is_an_image($temporary_image_path, $new_image_path)) {
-            move_uploaded_file($temporary_image_path, $new_image_path);
-        
- 
+
+                $image = $temporary_image_path;
+                $imgProperties = getimagesize($image);
+                $imageName = $image_filename;
+                $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+                $img_type = $imgProperties[2];
+                 
+            if( $img_type == IMAGETYPE_JPEG ) {
+                $sourcea = imagecreatefromjpeg($image);
+                
+                $resizeImga = image_resize($sourcea,$imgProperties[0],$imgProperties[1]);
+                imagejpeg($resizeImga,$new_image_path); 
+            }
+            elseif ($img_type == IMAGETYPE_PNG ) {
+                $sourcea = imagecreatefrompng($image);
+                
+                $resizeImga = image_resize($sourcea,$imgProperties[0],$imgProperties[1]);
+                imagepng($resizeImga,$new_image_path);
+            }
+            elseif ($img_type == IMAGETYPE_GIF ) {
+                $sourcea = imagecreatefromgif($image);
+                
+                $resizeImga = image_resize($sourcea,$imgProperties[0],$imgProperties[1]);
+                imagegif($resizeImga,$new_image_path);
+            }
+
 
 //Input feilds for content to database. Sanitization and insert into table
 
@@ -52,8 +82,11 @@ require('connect.php');
 
            else {  exit("Cannot leave feilds Empty when Creating Product Page. Please Retry"); }
 
-       } else exit("Incorrect Image format. Please use jpeg, gif or png types and Retry");
+       } else exit("Unsupported Image format. Please use jpeg, gif or png types and Retry");
 
-}	else { exit("Product Image Required. Please Retry"); }
+
+
+
+}	else { exit("Product Image Required When creating product page for the first time. Please Retry"); }
 
 ?>
