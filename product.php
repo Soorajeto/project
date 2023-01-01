@@ -63,22 +63,24 @@ require('connect.php');
             <h2>Our Products</h2>
         </section>
         <form id="inner" method="post" action="product.php">
-            <fieldset>
-                <legend>Sort By:</legend>
-                    <div id="sortingorder">
-                        <select id="ip" name="ip">
-                            <option value="" selected disabled hidden>Select an Option</option>
-                            <option value="date">Latest Product</option>
-                            <option value="name">Product Name</option>
-                        </select>
-                        <button type="submit" id="btn">Search</button>
-                    </div>
-            </fieldset>
+            <p>Sort By: </p>
+                <div id="sortingorder">
+                    <select id="ip" name="ip">
+                        <option value="" selected disabled hidden>Select an Option</option>
+                        <option value="date">Latest Product</option>
+                        <option value="name">Product Name</option>
+                    </select>
+                    <button type="submit" id="btn">Go!</button>
+                </div>
         </form>
         <div class="productsection">
             <ol>
                 <?php foreach ($quotes as $quote): ?>
-                <li><a href="index.html"> <img src="images/<?=$quote['imagename']?>" alt="<?=$quote['imagename']?>"></a><?= $quote['name'] ?></li>
+                <?php if($quote['imagename']==="none"): ?>
+                    <a href="display.php?id=<?=$quote['id']?>"><li><?= $quote['name'] ?></li></a>
+                <?php else: ?>
+                <li><a href="display.php?id=<?=$quote['id']?>"> <img src="images/<?=$quote['imagename']?>" alt="<?=$quote['imagename']?>"></a><?= $quote['name'] ?></li>
+                <?php endif ?>
                 <?php endforeach ?>
             </ol>
         </div>
